@@ -11,7 +11,7 @@ class HttpAuthenticator(Authenticator):
 
     server = Unicode(
         None,
-        allow_none=False,
+        allow_none=True,
         config=True,
         help="""
           Http authentication server.
@@ -20,7 +20,7 @@ class HttpAuthenticator(Authenticator):
     
     appid = Unicode(
        None,
-       allow_none=False,
+       allow_none=True,
        config=True,
        help="""
          Application Id recognized by the http authentication server
@@ -55,7 +55,8 @@ class HttpAuthenticator(Authenticator):
         reply = json.loads(resp.body.decode('utf8', 'replace'))
 
         if reply.get("code") == 200:
-            return reply["UserCN"]
+           return (reply.get("data").get("UserCN"))
         else:
-            return None
-   
+           return None
+
+
